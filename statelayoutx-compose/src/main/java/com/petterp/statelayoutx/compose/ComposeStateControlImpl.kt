@@ -6,7 +6,7 @@ import com.petterp.statelayoutx.StateEnum
  * 状态控制器实例
  * @author petterp
  */
-class StateControlImpl private constructor(override val status: StateEnum = StateEnum.CONTENT) :
+class ComposeStateControlImpl private constructor(override val status: StateEnum = StateEnum.CONTENT) :
     IStateControl {
     private var onEmpty: ((Any?) -> Unit)? = null
     private var onContent: ((Any?) -> Unit)? = null
@@ -71,7 +71,7 @@ class StateControlImpl private constructor(override val status: StateEnum = Stat
     }
 
     private fun copy(status: StateEnum): IStateControl =
-        StateControlImpl(status = status).also {
+        ComposeStateControlImpl(status = status).also {
             it.onContent = onContent
             it.onEmpty = onEmpty
             it.onLoading = onLoading
@@ -81,6 +81,6 @@ class StateControlImpl private constructor(override val status: StateEnum = Stat
 
     companion object {
         fun init(status: StateEnum = StateEnum.CONTENT): IStateControl =
-            StateControlImpl(status)
+            ComposeStateControlImpl(status)
     }
 }

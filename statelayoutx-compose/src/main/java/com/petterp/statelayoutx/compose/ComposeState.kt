@@ -24,10 +24,10 @@ typealias composeStateWidget = @Composable (IStateControl) -> Unit
 fun ComposeState(
     modifier: Modifier = Modifier,
     stateControl: IStateControl,
-    loadingWeight: composeStateWidget = StateConfig.loadingWidget,
-    emptyWeight: composeStateWidget = StateConfig.emptyWidget,
-    errorWeight: composeStateWidget = StateConfig.errorWidget,
-    contentWeight: composeStateWidget = StateConfig.contentWidget
+    loadingWeight: composeStateWidget = ComposeStateConfig.loadingWidget,
+    emptyWeight: composeStateWidget = ComposeStateConfig.emptyWidget,
+    errorWeight: composeStateWidget = ComposeStateConfig.errorWidget,
+    contentWeight: composeStateWidget = ComposeStateConfig.contentWidget
 ) {
     Box(modifier = modifier) {
         when (stateControl.status) {

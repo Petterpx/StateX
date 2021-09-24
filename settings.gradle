@@ -8,6 +8,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "StateLayoutX"
 include ':app'
-include ':compose'
+include ':statelayoutx-compose'
 include ':statelayoutx'
-include ':view'
+include ':statelayoutx-view'
