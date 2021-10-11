@@ -1,0 +1,33 @@
+
+Q
+!view/src/main/AndroidManifest.xml,6/6/660da5060373a0d6343b05c16e7b08a0d6e13c00
+Y
+)statelayoutx/src/main/AndroidManifest.xml,c/f/cf9eeb12cde2e14ea0ec5fd104653e9f8c568b8c
+A
+view/build.gradle,0/1/01bf4c911c60d99fe0bf6a9ed9c6d9183a126752
+O
+statelayoutx-compose/.gitignore,f/5/f534b21068e058c0c1b1d493edb1d7bd1a58659f
+L
+statelayoutx-view/.gitignore,7/9/792983ab79910c8a00ba319654d162caf48a455c
+a
+1statelayoutx-compose/src/main/AndroidManifest.xml,6/3/63af24b04298d76f845cc0907fdcdc942f7c5d0a
+^
+.statelayoutx-view/src/main/AndroidManifest.xml,0/d/0d1121738005cc45579f28fc32f30c27e0c98c3a
+W
+'statelayoutx-compose/consumer-rules.pro,4/d/4dacef97c4f4ed0c7e3f1d701ea44ffe126e4829
+T
+$statelayoutx-view/consumer-rules.pro,8/3/8398c295a1ffccde377848a896a771ff5e8d71b9
+ï
+estatelayoutx-compose/src/androidTest/java/com/petterp/statelayoutx/compose/ExampleInstrumentedTest.kt,6/f/6fae7fdcd43543ae3d3d8c92750c0fa4cd4ee12e
+è
+_statelayoutx-view/src/androidTest/java/com/petterp/statelayoutx/view/ExampleInstrumentedTest.kt,a/4/a442682997b52f7b77840b9f75046e6eeb000ce3
+Ü
+Vstatelayoutx-compose/src/test/java/com/petterp/statelayoutx/compose/ExampleUnitTest.kt,f/f/ffaf66ee7cbc2fa63d6691a6628a8de26a401556
+Ä
+Pstatelayoutx-view/src/test/java/com/petterp/statelayoutx/view/ExampleUnitTest.kt,4/0/40a25843e0e644d4da18ba3c8d771965fc094005
+W
+'statelayoutx-compose/proguard-rules.pro,b/9/b90a117fa6731989464a648b0cd564aa6dc0a698
+T
+$statelayoutx-view/proguard-rules.pro,0/a/0ad0d3d8bbc380248a60283f3174c6a724de3ef3
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
