@@ -12,9 +12,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/state" />
-            <option value="$PROJECT_DIR$/state-compose" />
-            <option value="$PROJECT_DIR$/state-view" />
+            <option value="$PROJECT_DIR$/statex" />
+            <option value="$PROJECT_DIR$/statex-compose" />
+            <option value="$PROJECT_DIR$/statex-view" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
