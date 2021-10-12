@@ -1,7 +1,20 @@
 package com.petterp.statex
 
 import android.app.Application
+import android.view.View
+import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import com.petterp.statex.compose.composeConfig
 import com.petterp.statex.view.viewConfig
 
@@ -13,15 +26,45 @@ class CustomApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         StateX.apply {
-            composeConfig {
-                errorWidget = {
-                    Text(text = "全局加载错误")
-                }
-                emptyWidget = {
-                    Text(text = "全局null数据")
+            // 更改默认防重复点击时间为1000L
+            defaultClickTime = 1000L
+            // 设置view-state的配置
+            viewConfig {
+                emptyLayout = R.layout.item_state_empty
+                onError {
+                    Toast.makeText(this@CustomApplication, "全局错误提示-view", Toast.LENGTH_SHORT).show()
                 }
             }
-            viewConfig {
+            // 设置compose-state的配置
+            composeConfig {
+                errorComponent {
+                    // Compose中插入原生
+                    AndroidView(
+                        {
+                            View.inflate(it, R.layout.item_state_error, null)
+                        },
+                        Modifier
+                            .fillMaxSize()
+                    )
+                }
+                emptyComponent {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Image(
+                            alignment = Alignment.Center,
+                            modifier = Modifier
+                                .padding(bottom = 10.dp)
+                                .height(300.dp),
+                            contentScale = ContentScale.FillHeight,
+                            painter = painterResource(id = R.drawable.ic_state_empty),
+                            contentDescription = ""
+                        )
+                        Text(text = getString(R.string.tv_status_default_all_empty_hint))
+                    }
+                }
+                onError {
+                    Toast.makeText(this@CustomApplication, "全局错误提示-compose", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
     }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.petterp.statex.view.StateView
+        android:id="@+id/stateView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/item_state_content"/>
+    </com.petterp.statex.view.StateView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="成功" />
+
+        <Button
+            android:id="@+id/btnError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="错误" />
+
+        <Button
+            android:id="@+id/btnLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="加载中" />
+
+        <Button
+            android:id="@+id/btnEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="空数据" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>

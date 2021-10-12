@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">StateLayoutX</string>
+    <string name="tv_status_content_hint">加载成功了</string>
+    <string name="tv_status_error_hint">加载失败</string>
+    <string name="tv_status_loading_hint">加载中</string>
+    <string name="tv_status_default_all_empty_hint">全局默认空数据显示</string>
+    <string name="tv_status_empty_hint">暂无数据</string>
 </resources>
