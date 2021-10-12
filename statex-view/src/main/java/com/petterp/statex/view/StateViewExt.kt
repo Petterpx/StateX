@@ -3,12 +3,12 @@ package com.petterp.statex.view
 import android.view.View
 import androidx.annotation.IdRes
 import com.petterp.statex.StateX
+import com.petterp.statex.StateX.defaultClickTime
 
 /**
  * StateView扩展
  * @author petterp
  */
-internal const val DEFAULT_CLICK_TIME = 500L
 internal typealias stateBlock = View.(Any?) -> Unit
 
 internal val viewConfig by lazy(LazyThreadSafetyMode.PUBLICATION) {
@@ -30,7 +30,6 @@ class StateViewConfig {
     internal var onError: stateBlock? = null
     internal var onLoading: stateBlock? = null
     internal var onContent: stateBlock? = null
-    var defaultClickTime: Long = 500L
     var errorLayout = View.NO_ID
     var emptyLayout = View.NO_ID
     var loadingLayout = View.NO_ID
@@ -51,13 +50,12 @@ class StateViewConfig {
         onContent = block
     }
 
-    fun setRetryIds(@IdRes vararg ids: Int, defaultClickTime: Long = 500L) {
+    fun setRetryIds(@IdRes vararg ids: Int) {
         retryIds = ids
-        this.defaultClickTime = defaultClickTime
     }
 }
 
-internal fun View.clickOne(time: Long = DEFAULT_CLICK_TIME, runnable: () -> Unit) {
+internal fun View.clickOne(time: Long = defaultClickTime, runnable: () -> Unit) {
     setOnClickListener {
         it?.isEnabled = false
         runnable()

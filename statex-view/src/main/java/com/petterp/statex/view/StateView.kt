@@ -11,42 +11,46 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.collection.ArrayMap
 import com.petterp.statex.StateEnum
+import com.petterp.statex.StateX.defaultClickTime
 
 /**
- * StateLayout
+ * 状态View
  * @author liangjingkanji
  *
  * copy [https://github.com/liangjingkanji/StateLayout/blob/master/statelayout/src/main/java/com/drake/statelayout/StateLayout.kt]
+ * 部分修改
  */
 class StateView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
-    override var status: StateEnum = StateEnum.CONTENT
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), IStateView {
 
     private val views = ArrayMap<StateEnum, View>()
     private var refresh = true
     private var stateChanged = false
-    private var trigger = false
+    private var trigger = true
 
-    private var clickTime: Long = DEFAULT_CLICK_TIME
+    private var clickTime: Long = defaultClickTime
     private var retryIds: IntArray? = null
         get() = field ?: viewConfig.retryIds
-    private var onEmpty: (View.(tag: Any?) -> Unit)? = null
+    private var onEmpty: stateBlock? = null
         get() = field ?: viewConfig.onEmpty
-    private var onError: (View.(tag: Any?) -> Unit)? = null
+    private var onError: stateBlock? = null
         get() = field ?: viewConfig.onError
-    private var onContent: (View.(tag: Any?) -> Unit)? = null
+    private var onContent: stateBlock? = null
         get() = field ?: viewConfig.onContent
-    private var onLoading: (View.(tag: Any?) -> Unit)? = null
+    private var onLoading: stateBlock? = null
         get() = field ?: viewConfig.onLoading
     private var onRefresh: (StateView.(tag: Any?) -> Unit)? = null
 
+    private var _state: StateEnum = StateEnum.CONTENT
+
+    override val state: StateEnum
+        get() = _state
+
     /** 当前缺省页是否加载成功过, 即是否执行过[showContent] */
     var loaded = false
-
-    // <editor-fold desc="设置缺省页">
 
     /** 错误页面布局 */
     @LayoutRes
@@ -165,7 +169,7 @@ class StateView @JvmOverloads constructor(
         if (silent && refresh) {
             onRefresh?.invoke(this, tag)
         }
-        if (status == StateEnum.LOADING) {
+        if (state == StateEnum.LOADING) {
             onLoading?.invoke(getStatusView(StateEnum.LOADING), tag)
         }
         show(StateEnum.LOADING, tag)
@@ -202,9 +206,9 @@ class StateView @JvmOverloads constructor(
      * 为错误页/空页中的指定Id控件设置点击事件, 点击会触发[showLoading]
      * 默认点击500ms内防抖动
      */
-    fun setRetryIds(@IdRes vararg ids: Int, defaultClickTime: Long = DEFAULT_CLICK_TIME) = apply {
+    fun setRetryIds(@IdRes vararg ids: Int, clickTime: Long = defaultClickTime) = apply {
         retryIds = ids
-        clickTime = defaultClickTime
+        this.clickTime = clickTime
     }
 
     /**
@@ -220,13 +224,13 @@ class StateView @JvmOverloads constructor(
     /**
      * 显示视图
      */
-    private fun show(status: StateEnum, tag: Any? = null) {
+    private fun show(state: StateEnum, tag: Any? = null) {
         if (trigger) stateChanged = true
-        this.status = status
+        this._state = state
         runMain {
             try {
-                val view = showStatus(status)
-                when (status) {
+                val view = showState(state)
+                when (state) {
                     StateEnum.EMPTY -> {
                         retryIds?.forEach {
                             view.findViewById<View>(it)?.clickOne(clickTime) {
@@ -258,8 +262,8 @@ class StateView @JvmOverloads constructor(
         }
     }
 
-    private fun showStatus(status: StateEnum): View {
-        val target = getStatusView(status)
+    private fun showState(state: StateEnum): View {
+        val target = getStatusView(state)
         for (view in views.values) {
             if (target == view) {
                 view.visibility = VISIBLE
@@ -273,24 +277,24 @@ class StateView @JvmOverloads constructor(
     /**
      * 删除指定的缺省页
      */
-    private fun removeStatus(status: StateEnum?) {
-        views.remove(status)?.let { removeView(it) }
+    private fun removeStatus(state: StateEnum?) {
+        views.remove(state)?.let { removeView(it) }
     }
 
     /**
      * 返回缺省页视图对象
      */
     @Throws(NullPointerException::class)
-    private fun getStatusView(status: StateEnum): View {
-        views[status]?.let { return it }
-        val layoutId = when (status) {
+    private fun getStatusView(state: StateEnum): View {
+        views[state]?.let { return it }
+        val layoutId = when (state) {
             StateEnum.EMPTY -> emptyLayout
             StateEnum.ERROR -> errorLayout
             StateEnum.LOADING -> loadingLayout
             else -> NO_ID
         }
         if (layoutId == NO_ID) {
-            when (status) {
+            when (state) {
                 StateEnum.ERROR -> throw Resources.NotFoundException("No StateLayout errorLayout is set")
                 StateEnum.EMPTY -> throw Resources.NotFoundException("No StateLayout emptyLayout is set")
                 StateEnum.LOADING -> throw Resources.NotFoundException("No StateLayout loadingLayout is set")
@@ -299,7 +303,7 @@ class StateView @JvmOverloads constructor(
         }
         val view = LayoutInflater.from(context).inflate(layoutId, this, false)
         addView(view)
-        views[status] = view
+        views[state] = view
         return view
     }
 
