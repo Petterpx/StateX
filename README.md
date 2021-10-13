@@ -40,13 +40,15 @@ allprojects {
 >
 > **settings.gradle**
 >
+> ```groovy
 > dependencyResolutionManagement {
->     repositories {
->
-> ​        // ...
-> ​        maven { url 'https://jitpack.io' }
-> ​    }
+>  repositories {
+> 
+>         // ...
+>         maven { url 'https://jitpack.io' }
+>     }
 > }
+> ```
 
 ### Gradle
 
