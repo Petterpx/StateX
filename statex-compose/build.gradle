@@ -3,6 +3,19 @@ plugins {
     id 'kotlin-android'
 }
 
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.petterp'
+                artifactId = 'statex-compose'
+                version = '1.0-dev02'
+            }
+        }
+    }
+}
+
 android {
     compileSdk 31
 
