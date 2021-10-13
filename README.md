@@ -1,10 +1,10 @@
-# Statex
+# StateX
 
-<img src="https://tva1.sinaimg.cn/large/008i3skNly1gvdye5wd6kj30vu0ikgm7.jpg" alt="image-20211013202516949" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/008i3skNly1gvdyqjncaxj60vy0jqq3n02.jpg" alt="image-20211013203710758" style="zoom:50%;" />
 
 [![](https://jitpack.io/v/Petterpx/StateX.svg)](https://jitpack.io/#Petterpx/StateX)[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/) 
 
-简洁易用的 Android 状态页处理库。
+简洁易用的 Android 状态页处理库🍃。
 
 
 
