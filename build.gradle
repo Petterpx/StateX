@@ -2,7 +2,7 @@
 buildscript {
     ext {
         compose_version = '1.0.2'
-        statex_version = '1.0-dev02'
+        statex_version = '1.0-beta03'
     }
     repositories {
         google()
