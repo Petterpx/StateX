@@ -1,14 +1,15 @@
 # StateX
 
-<img src="https://tva1.sinaimg.cn/large/008i3skNly1gvdyqjncaxj60vy0jqq3n02.jpg" alt="image-20211013203710758" style="zoom: 33%;" />
 
-[![](https://jitpack.io/v/Petterpx/StateX.svg)](https://jitpack.io/#Petterpx/StateX)[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/) 
+<img src="https://tva1.sinaimg.cn/large/008i3skNly1gvdyqjncaxj60vy0jqq3n02.jpg" alt="image-20211013203710758" width="700" />
+
+
+[![](https://jitpack.io/v/Petterpx/StateX.svg)](https://jitpack.io/#Petterpx/StateX) [![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/) 
 
 简洁易用的 Android 状态页处理库🍃。
-
-
-
-<img src="https://tva1.sinaimg.cn/large/008i3skNly1gvdrqm81j7g60b40n67wn02.gif" alt="statex_simple" style="zoom:50%;" />
+<div align=center>
+  <img src="https://github.com/Petterpx/StateX/blob/main/statex_simple.gif" width="200"/>
+</div>
 
 ## 功能
 
