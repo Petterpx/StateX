@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'maven-publish'
 }
 
 afterEvaluate {
@@ -10,7 +11,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.petterp'
                 artifactId = 'statex-view'
-                version = '1.0-dev02'
+                version = statex_version
             }
         }
     }
