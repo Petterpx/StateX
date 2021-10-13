@@ -51,9 +51,6 @@ class ComposeStateActivity : ComponentActivity() {
                                 showContent()
                             }
                         }
-                        onError {
-                            Log.e("petterp", "error---tag-$it")
-                        }
                     }
                     Box(
                         modifier = Modifier
@@ -84,21 +81,27 @@ class ComposeStateActivity : ComponentActivity() {
                         }
                     }
                     Row(
-                        modifier = Modifier.constrainAs(control) {
-                            centerHorizontallyTo(parent)
-                            bottom.linkTo(parent.bottom)
-                        }
+                        modifier = Modifier
+                            .constrainAs(control) {
+                                centerHorizontallyTo(parent)
+                                bottom.linkTo(parent.bottom)
+                            }
+                            .padding(bottom = 10.dp)
                     ) {
-                        Button(onClick = { state.showContent() }) {
+                        val modifier = Modifier.padding(start = 10.dp)
+                        Button(modifier = modifier, onClick = { state.showContent() }) {
                             Text(text = "成功")
                         }
-                        Button(onClick = { state.showError() }) {
+                        Button(modifier = modifier, onClick = { state.showError() }) {
                             Text(text = "错误")
                         }
-                        Button(onClick = { state.showLoading() }) {
+                        Button(
+                            modifier = modifier,
+                            onClick = { state.showLoading(refresh = false) }
+                        ) {
                             Text(text = "加载中")
                         }
-                        Button(onClick = { state.showEmpty() }) {
+                        Button(modifier = modifier, onClick = { state.showEmpty() }) {
                             Text(text = "空数据")
                         }
                     }

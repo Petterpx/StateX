@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
  */
 class ViewStateActivity : AppCompatActivity(), View.OnClickListener {
 
-    val stateView: StateView by lazy {
+    private val stateView: StateView by lazy {
         findViewById(R.id.stateView)
     }
 
@@ -42,7 +42,7 @@ class ViewStateActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btnContent -> stateView.showContent()
-            R.id.btnLoading -> stateView.showLoading()
+            R.id.btnLoading -> stateView.showLoading(refresh = false)
             R.id.btnError -> stateView.showError()
             R.id.btnEmpty -> stateView.showEmpty()
         }
