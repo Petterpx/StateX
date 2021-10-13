@@ -1,8 +1,19 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+
 buildscript {
+
     ext {
         compose_version = '1.0.2'
         statex_version = '1.0-beta03'
+        versionCode = {
+            def cmd = 'git rev-list HEAD --count'
+            cmd.execute().text.trim().toInteger()
+        }
+        group_id = 'com.petterp'
+        artifactId_statex = 'statex'
+        artifactId_statex_compose = 'statex-compose'
+        artifactId_statex_view = 'statex-view'
     }
     repositories {
         google()
