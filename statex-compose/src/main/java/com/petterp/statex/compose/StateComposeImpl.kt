@@ -1,27 +1,35 @@
 package com.petterp.statex.compose
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import com.petterp.statex.StateEnum
 
 /**
  * Compose 状态控制器实例,对于外部,通过[IStateCompose]控制
  * @author petterp
  */
-class StateCompose internal constructor() : IStateCompose {
+class StateCompose internal constructor(stateEnum: StateEnum) : IStateCompose {
 
-    // 内部状态
-    internal var internalState by mutableStateOf(StateEnum.CONTENT)
+    /** 当前状态对应的value */
+    private var _stateData: Any? = null
+    private var _internalState by mutableStateOf(StateEnum.CONTENT)
 
-    override val state: StateEnum
-        get() = internalState
+    init {
+        _internalState = stateEnum
+    }
 
+    /** 当前内部状态,外部不应感知到其存在 */
     private var onEmpty: stateBlock? = composeConfig.onEmpty
     private var onContent: stateBlock? = composeConfig.onContent
     private var onError: stateBlock? = composeConfig.onError
     private var onLoading: stateBlock? = composeConfig.onLoading
     private var onRefresh: stateBlock? = null
+
+    override val state: StateEnum
+        get() = _internalState
+    override val stateData: Any?
+        get() = _stateData
+    override var enableNullRetry: Boolean = composeConfig.enableNullRetry
+    override var enableErrorRetry: Boolean = composeConfig.enableNullRetry
 
     override fun onError(block: stateBlock) {
         this.onError = block
@@ -31,12 +39,12 @@ class StateCompose internal constructor() : IStateCompose {
         this.onContent = block
     }
 
-    override fun onLoading(block: stateBlock) {
-        this.onLoading = block
-    }
-
     override fun onRefresh(block: stateBlock) {
         this.onRefresh = block
+    }
+
+    override fun onLoading(block: stateBlock) {
+        this.onLoading = block
     }
 
     override fun onEmpty(block: stateBlock) {
@@ -44,22 +52,18 @@ class StateCompose internal constructor() : IStateCompose {
     }
 
     override fun showError(tag: Any?) {
-        if (internalState == StateEnum.ERROR)
-            return
         onError?.invoke(tag)
-        internalState = StateEnum.ERROR
+        newState(StateEnum.ERROR, tag)
     }
 
     override fun showContent(tag: Any?) {
         onContent?.invoke(tag)
-        if (internalState == StateEnum.CONTENT) return
-        internalState = StateEnum.CONTENT
+        newState(StateEnum.CONTENT, tag)
     }
 
     override fun showEmpty(tag: Any?) {
         onEmpty?.invoke(tag)
-        if (internalState == StateEnum.EMPTY) return
-        internalState = StateEnum.EMPTY
+        newState(StateEnum.EMPTY, tag)
     }
 
     override fun showLoading(
@@ -67,13 +71,15 @@ class StateCompose internal constructor() : IStateCompose {
         silent: Boolean,
         refresh: Boolean
     ) {
-        // 每次loading都会触发,如果同时silent与refresh满足,则触发refresh
         onLoading?.invoke(tag)
-        if (silent && refresh) {
-            onRefresh?.invoke(tag)
-        }
-        if (internalState == StateEnum.LOADING) return
         if (refresh) onRefresh?.invoke(tag)
-        internalState = StateEnum.LOADING
+        if (!silent) {
+            newState(StateEnum.LOADING, tag)
+        }
+    }
+
+    private fun newState(newState: StateEnum, tag: Any?) {
+        _stateData = tag
+        _internalState = newState
     }
 }

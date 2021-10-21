@@ -20,17 +20,24 @@ fun StateCompose(
     loadingComponentBlock: stateComponentBlock = composeConfig.loadingComponent,
     emptyComponentBlock: stateComponentBlock = composeConfig.emptyComponent,
     errorComponentBlock: stateComponentBlock = composeConfig.errorComponent,
-    contentComponentBlock: stateComponentBlock = composeConfig.contentComponent,
+    contentComponentBlock: stateComponentBlock,
 ) {
+    val data = stateControl.stateData
     when (stateControl.state) {
-        StateEnum.LOADING -> loadingComponentBlock(stateControl)
-        StateEnum.CONTENT -> contentComponentBlock(stateControl)
-        StateEnum.EMPTY -> StateBoxComposeClick(block = { stateControl.showLoading() }) {
-            emptyComponentBlock(stateControl)
-        }
-        StateEnum.ERROR -> StateBoxComposeClick(block = { stateControl.showLoading() }) {
-            errorComponentBlock(stateControl)
-        }
+        StateEnum.LOADING -> loadingComponentBlock(stateControl, data)
+        StateEnum.CONTENT -> contentComponentBlock(stateControl, data)
+        StateEnum.EMPTY -> if (stateControl.enableNullRetry) {
+            StateBoxComposeClick(block = { stateControl.showLoading() }) {
+                emptyComponentBlock(stateControl, data)
+            }
+        } else emptyComponentBlock(stateControl, data)
+        StateEnum.ERROR -> if (stateControl.enableErrorRetry) {
+            StateBoxComposeClick(block = {
+                stateControl.showLoading(data)
+            }) {
+                errorComponentBlock(stateControl, data)
+            }
+        } else errorComponentBlock(stateControl, data)
     }
 }
 

@@ -13,12 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.semantics.Role
+import com.petterp.statex.IState
 import com.petterp.statex.StateEnum
 import com.petterp.statex.StateX
 import com.petterp.statex.StateX.defaultClickTime
 
-internal typealias stateBlock = (Any?) -> Unit
-internal typealias stateComponentBlock = @Composable (IStateCompose) -> Unit
+internal typealias stateBlock = (tag: Any?) -> Unit
+internal typealias stateComponentBlock = @Composable IState.(tag: Any?) -> Unit
 
 /**
  * state全局默认处理方式
@@ -28,11 +29,23 @@ class ComposeStateConfig {
     internal var loadingComponent: stateComponentBlock = {}
     internal var emptyComponent: stateComponentBlock = {}
     internal var errorComponent: stateComponentBlock = {}
-    internal var contentComponent: stateComponentBlock = {}
     internal var onContent: stateBlock? = null
     internal var onLoading: stateBlock? = null
     internal var onError: stateBlock? = null
     internal var onEmpty: stateBlock? = null
+    internal var enableNullRetry = true
+    internal var enableErrorRetry = true
+
+    /** 是否允许空数据时点击重试 */
+    fun enableNullRetry(isEnable: Boolean) {
+        this.enableErrorRetry = isEnable
+    }
+
+    /** 是否加载错误点击重试 */
+    fun enableErrorRetry(isEnable: Boolean) {
+        this.enableErrorRetry = isEnable
+    }
+
     fun onContent(block: stateBlock) {
         this.onContent = block
     }
@@ -47,10 +60,6 @@ class ComposeStateConfig {
 
     fun onEmpty(block: stateBlock) {
         this.onEmpty = block
-    }
-
-    fun contentComponent(component: stateComponentBlock) {
-        this.contentComponent = component
     }
 
     fun loadingComponent(component: stateComponentBlock) {
@@ -82,8 +91,7 @@ fun rememberState(
     block: (IStateCompose.() -> Unit)? = null
 ): IStateCompose =
     currentComposer.cache(false) {
-        StateCompose().apply {
-            internalState = stateEnum
+        StateCompose(stateEnum).apply {
             block?.invoke(this)
         }
     }
