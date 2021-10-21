@@ -36,6 +36,8 @@ class ComposeStateActivity : ComponentActivity() {
                     val (control, content) = createRefs()
                     val coroutineScope = rememberCoroutineScope()
                     val state = rememberState {
+                        enableErrorRetry = true
+                        enableNullRetry = true
                         onEmpty {
                         }
                         onContent {
@@ -45,9 +47,8 @@ class ComposeStateActivity : ComponentActivity() {
                             Log.e("petterp", "loading---tag-$it")
                         }
                         onRefresh {
-                            Log.e("petterp", "refresh---tag-$it")
                             coroutineScope.launch {
-                                delay(2000L)
+                                delay(3000)
                                 showContent()
                             }
                         }
@@ -92,7 +93,7 @@ class ComposeStateActivity : ComponentActivity() {
                         Button(modifier = modifier, onClick = { state.showContent() }) {
                             Text(text = "成功")
                         }
-                        Button(modifier = modifier, onClick = { state.showError() }) {
+                        Button(modifier = modifier, onClick = { state.showError("加载错误了,靓仔") }) {
                             Text(text = "错误")
                         }
                         Button(
@@ -101,7 +102,10 @@ class ComposeStateActivity : ComponentActivity() {
                         ) {
                             Text(text = "加载中")
                         }
-                        Button(modifier = modifier, onClick = { state.showEmpty() }) {
+                        Button(
+                            modifier = modifier,
+                            onClick = { state.showEmpty("空数据了,自定义传递的数据") }
+                        ) {
                             Text(text = "空数据")
                         }
                     }
