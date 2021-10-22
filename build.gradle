@@ -5,6 +5,9 @@ buildscript {
 
     ext {
         compose_version = '1.0.2'
+        minsdk_version = 21
+        targetsdk_version = 31
+        compilesdk_version = 31
         statex_version = '1.0-beta03'
         versionCode = {
             def cmd = 'git rev-list HEAD --count'

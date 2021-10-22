@@ -18,18 +18,15 @@ afterEvaluate {
 }
 
 android {
-    compileSdk 31
+    compileSdk compilesdk_version
 
     defaultConfig {
-        minSdk 21
-        targetSdk 31
-        versionCode 1
+        minSdk minsdk_version
+        targetSdk targetsdk_version
+        versionCode versionCode
         versionName statex_version
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -48,7 +45,4 @@ android {
 dependencies {
     compileOnly 'androidx.core:core-ktx:1.6.0'
     compileOnly project(path: ':statex')
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
