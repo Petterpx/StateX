@@ -1,4 +1,4 @@
-package com.petterp.statex.ui.theme
+package com.petterp.state.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

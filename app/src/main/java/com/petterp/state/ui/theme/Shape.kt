@@ -1,4 +1,4 @@
-package com.petterp.statex.ui.theme
+package com.petterp.state.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

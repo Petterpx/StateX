@@ -1,7 +1,6 @@
-package com.petterp.statex
+package com.petterp.state
 
 import android.app.Application
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -16,6 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.petterp.statex.StateX
 import com.petterp.statex.compose.composeConfig
 import com.petterp.statex.view.viewConfig
 

@@ -1,4 +1,4 @@
-package com.petterp.statex
+package com.petterp.state
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.petterp.statex.ui.theme.StateLayoutXTheme
+import com.petterp.state.ui.theme.StateLayoutXTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.petterp.statex
+package com.petterp.state
 
 import android.os.Bundle
 import android.util.Log
@@ -17,9 +17,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.petterp.state.R
 import com.petterp.statex.compose.StateCompose
 import com.petterp.statex.compose.rememberState
-import com.petterp.statex.ui.theme.StateLayoutXTheme
+import com.petterp.state.ui.theme.StateLayoutXTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
