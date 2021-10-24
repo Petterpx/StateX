@@ -18,7 +18,6 @@ import com.petterp.statex.StateX.defaultClickTime
  * @author liangjingkanji
  *
  * copy [https://github.com/liangjingkanji/StateLayout/blob/master/statelayout/src/main/java/com/drake/statelayout/StateLayout.kt]
- * 部分修改
  */
 class StateView @JvmOverloads constructor(
     context: Context,
