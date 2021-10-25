@@ -39,7 +39,7 @@ class CustomApplication : Application() {
             // 设置compose-state的配置
             composeConfig {
                 // 将tag传递出来,对于compose而言,我们有时需要对界面进行重绘,所以携带了传递的数据,以便做自定义处理
-                errorComponent { tag ->
+                errorComponent {
                     // Compose中插入原生
                     AndroidView(
                         {

@@ -110,7 +110,7 @@ fun Fragment.state(): StateView {
 fun View.state(): StateView {
     val parent = parent as ViewGroup
     if (parent is ViewPager || parent is RecyclerView) {
-        throw UnsupportedOperationException("You should using StateLayout wrap [ $this ] in layout when parent is ViewPager or RecyclerView")
+        throw UnsupportedOperationException("You should using StateView wrap [ $this ] in layout when parent is ViewPager or RecyclerView")
     }
     val stateLayout = StateView(context)
     stateLayout.id = id
