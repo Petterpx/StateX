@@ -10,7 +10,7 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
                 groupId = group_id
-                artifactId = artifactId_statex
+                artifactId = artifactId_statex_compose
                 version = statex_version
             }
         }
