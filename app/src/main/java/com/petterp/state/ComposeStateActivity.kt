@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -17,12 +18,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.petterp.state.R
-import com.petterp.statex.compose.StateCompose
-import com.petterp.statex.compose.rememberState
+import androidx.lifecycle.ViewModel
+import com.petterp.state.simple.CustomViewModel
 import com.petterp.state.ui.theme.StateLayoutXTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.petterp.statex.StateEnum
+import com.petterp.statex.compose.IStateCompose
+import com.petterp.statex.compose.StateCompose
+import com.petterp.statex.compose.StateComposeImpl
 
 /**
  *
@@ -35,25 +37,26 @@ class ComposeStateActivity : ComponentActivity() {
             StateLayoutXTheme {
                 ConstraintLayout {
                     val (control, content) = createRefs()
-                    val coroutineScope = rememberCoroutineScope()
-                    val state = rememberState {
-                        enableErrorRetry = true
-                        enableNullRetry = true
-                        onEmpty {
-                        }
-                        onContent {
-                            Log.e("petterp", "content---tag-$it")
-                        }
-                        onLoading {
-                            Log.e("petterp", "loading---tag-$it")
-                        }
-                        onRefresh {
-                            coroutineScope.launch {
-                                delay(3000)
-                                showContent()
+                    val viewModel by viewModels<CustomViewModel>()
+                    val state = remember {
+                        viewModel.state.apply {
+                            enableErrorRetry = true
+                            enableNullRetry = true
+                            onEmpty {
                             }
+                            onContent {
+                                Log.e("petterp", "content---tag-$it")
+                            }
+                            onLoading {
+                                Log.e("petterp", "loading---tag-$it")
+                            }
+                            onRefresh {
+                                viewModel.getData()
+                            }
+                            Log.e("petterp", "---测试我被调用几次--$state")
                         }
                     }
+                    Log.e("petterp", "---测试我被调用几次--内容页--$state")
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -113,5 +116,26 @@ class ComposeStateActivity : ComponentActivity() {
                 }
             }
         }
+    }
+}
+
+class BaseModel : ViewModel() {
+    val state: IStateCompose by lazy {
+        StateComposeImpl(StateEnum.CONTENT)
+    }
+
+    fun toStateSuccess(value: Any) {
+        state.showContent(value)
+    }
+
+    fun toStateError(t: Throwable) {
+        state.showError(t)
+    }
+
+    fun toStateEmpty() {
+        state.showEmpty()
+    }
+
+    fun test() {
     }
 }

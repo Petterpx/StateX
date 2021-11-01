@@ -32,6 +32,7 @@ class CustomApplication : Application() {
             // 设置view-state的配置
             viewConfig {
                 emptyLayout = R.layout.item_state_empty
+                setRetryIds(R.id.errorId)
                 onError {
                     Toast.makeText(this@CustomApplication, "全局错误提示-view", Toast.LENGTH_SHORT).show()
                 }

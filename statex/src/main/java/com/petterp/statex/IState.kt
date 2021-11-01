@@ -9,6 +9,12 @@ interface IState {
     /** 当前页面状态 */
     val state: StateEnum
 
+    /** 空数据点击重试 */
+    var enableNullRetry: Boolean
+
+    /** 错误点击重试 */
+    var enableErrorRetry: Boolean
+
     /** 显示加载成功
      * @param [tag] 可以传递任意数据,会在回调处收到
      * */

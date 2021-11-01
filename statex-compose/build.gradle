@@ -53,6 +53,9 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    buildFeatures {
+        buildConfig = false
+    }
 }
 
 dependencies {
@@ -62,4 +65,5 @@ dependencies {
     compileOnly "androidx.compose.material:material:$compose_version"
     compileOnly "androidx.compose.runtime:runtime:$compose_version"
     compileOnly "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    compileOnly 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
 }

@@ -11,6 +11,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.collection.ArrayMap
 import com.petterp.statex.StateEnum
+import com.petterp.statex.StateX
 import com.petterp.statex.StateX.defaultClickTime
 
 /**
@@ -30,6 +31,12 @@ class StateView @JvmOverloads constructor(
     private var stateChanged = false
     private var trigger = true
 
+    /** 当前缺省页是否加载成功过, 即是否执行过[showContent] */
+    var loaded = false
+    private var _state: StateEnum = StateEnum.CONTENT
+    private var _enableNullRetry: Boolean = StateX.enableNullRetry
+    private var _enableErrorRetry: Boolean = StateX.enableErrorRetry
+
     private var clickTime: Long = defaultClickTime
     private var retryIds: IntArray? = null
         get() = field ?: viewConfig.retryIds
@@ -42,14 +49,6 @@ class StateView @JvmOverloads constructor(
     private var onLoading: stateBlock? = null
         get() = field ?: viewConfig.onLoading
     private var onRefresh: (StateView.(tag: Any?) -> Unit)? = null
-
-    private var _state: StateEnum = StateEnum.CONTENT
-
-    override val state: StateEnum
-        get() = _state
-
-    /** 当前缺省页是否加载成功过, 即是否执行过[showContent] */
-    var loaded = false
 
     /** 错误页面布局 */
     @LayoutRes
@@ -92,10 +91,24 @@ class StateView @JvmOverloads constructor(
             emptyLayout = attributes.getResourceId(R.styleable.StateView_empty_layout, NO_ID)
             errorLayout = attributes.getResourceId(R.styleable.StateView_error_layout, NO_ID)
             loadingLayout = attributes.getResourceId(R.styleable.StateView_loading_layout, NO_ID)
+            _enableErrorRetry =
+                attributes.getBoolean(
+                    R.styleable.StateView_enable_error_retry,
+                    StateX.enableErrorRetry
+                )
+            _enableNullRetry = attributes.getBoolean(
+                R.styleable.StateView_enable_null_retry,
+                StateX.enableNullRetry
+            )
         } finally {
             attributes.recycle()
         }
     }
+
+    override val state: StateEnum
+        get() = _state
+    override var enableNullRetry: Boolean = _enableNullRetry
+    override var enableErrorRetry: Boolean = _enableErrorRetry
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -231,17 +244,21 @@ class StateView @JvmOverloads constructor(
                 val view = showState(state)
                 when (state) {
                     StateEnum.EMPTY -> {
-                        retryIds?.forEach {
-                            view.findViewById<View>(it)?.clickOne(clickTime) {
-                                showLoading()
+                        if (enableNullRetry) {
+                            retryIds?.forEach {
+                                view.findViewById<View>(it)?.clickOne(clickTime) {
+                                    showLoading()
+                                }
                             }
                         }
                         onEmpty?.invoke(view, tag)
                     }
                     StateEnum.ERROR -> {
-                        retryIds?.forEach {
-                            view.findViewById<View>(it)?.clickOne(clickTime) {
-                                showLoading()
+                        if (enableErrorRetry) {
+                            retryIds?.forEach {
+                                view.findViewById<View>(it)?.clickOne(clickTime) {
+                                    showLoading()
+                                }
                             }
                         }
                         onError?.invoke(view, tag)

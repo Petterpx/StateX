@@ -19,7 +19,6 @@ afterEvaluate {
 
 android {
     compileSdk compilesdk_version
-
     defaultConfig {
         minSdk minsdk_version
         targetSdk targetsdk_version
@@ -40,6 +39,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    buildFeatures {
+        buildConfig = false
     }
 }
 

@@ -22,6 +22,8 @@
         <attr name="empty_layout" format="reference" />
         <attr name="error_layout" format="reference" />
         <attr name="loading_layout" format="reference" />
+        <attr name="enable_null_retry" format="boolean" />
+        <attr name="enable_error_retry" format="boolean" />
     </declare-styleable>
 
 </resources>

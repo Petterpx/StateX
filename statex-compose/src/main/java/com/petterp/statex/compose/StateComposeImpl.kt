@@ -1,35 +1,34 @@
 package com.petterp.statex.compose
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.petterp.statex.StateEnum
+import com.petterp.statex.StateX
 
 /**
  * Compose 状态控制器实例,对于外部,通过[IStateCompose]控制
  * @author petterp
  */
-class StateCompose internal constructor(stateEnum: StateEnum) : IStateCompose {
+class StateComposeImpl constructor(stateEnum: StateEnum = StateEnum.CONTENT) : IStateCompose {
 
-    /** 当前状态对应的value */
-    private var _stateData: Any? = null
+    private var onRefresh: stateBlock? = null
+    private var onEmpty: stateBlock? = composeConfig.onEmpty
+    private var onContent: stateBlock? = composeConfig.onContent
+    private var onError: stateBlock? = composeConfig.onError
+    private var onLoading: stateBlock? = composeConfig.onLoading
+
+    /** 当前内部可变状态 */
     private var _internalState by mutableStateOf(StateEnum.CONTENT)
 
     init {
         _internalState = stateEnum
     }
 
-    /** 当前内部状态,外部不应感知到其存在 */
-    private var onEmpty: stateBlock? = composeConfig.onEmpty
-    private var onContent: stateBlock? = composeConfig.onContent
-    private var onError: stateBlock? = composeConfig.onError
-    private var onLoading: stateBlock? = composeConfig.onLoading
-    private var onRefresh: stateBlock? = null
-
     override val state: StateEnum
         get() = _internalState
-    override val stateData: Any?
-        get() = _stateData
-    override var enableNullRetry: Boolean = composeConfig.enableNullRetry
-    override var enableErrorRetry: Boolean = composeConfig.enableNullRetry
+    override var enableNullRetry: Boolean = StateX.enableNullRetry
+    override var enableErrorRetry: Boolean = StateX.enableNullRetry
 
     override fun onError(block: stateBlock) {
         this.onError = block
@@ -53,17 +52,17 @@ class StateCompose internal constructor(stateEnum: StateEnum) : IStateCompose {
 
     override fun showError(tag: Any?) {
         onError?.invoke(tag)
-        newState(StateEnum.ERROR, tag)
+        newState(StateEnum.ERROR)
     }
 
     override fun showContent(tag: Any?) {
         onContent?.invoke(tag)
-        newState(StateEnum.CONTENT, tag)
+        newState(StateEnum.CONTENT)
     }
 
     override fun showEmpty(tag: Any?) {
         onEmpty?.invoke(tag)
-        newState(StateEnum.EMPTY, tag)
+        newState(StateEnum.EMPTY)
     }
 
     override fun showLoading(
@@ -74,12 +73,11 @@ class StateCompose internal constructor(stateEnum: StateEnum) : IStateCompose {
         onLoading?.invoke(tag)
         if (refresh) onRefresh?.invoke(tag)
         if (!silent) {
-            newState(StateEnum.LOADING, tag)
+            newState(StateEnum.LOADING)
         }
     }
 
-    private fun newState(newState: StateEnum, tag: Any?) {
-        _stateData = tag
+    private fun newState(newState: StateEnum) {
         _internalState = newState
     }
 }
