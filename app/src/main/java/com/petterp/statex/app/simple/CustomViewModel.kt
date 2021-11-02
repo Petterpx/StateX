@@ -1,4 +1,4 @@
-package com.petterp.state.simple
+package com.petterp.statex.app.simple
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

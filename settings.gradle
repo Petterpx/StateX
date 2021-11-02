@@ -8,6 +8,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "StateX"
 include ':app'
-include ':statex-compose'
-include ':statex'
-include ':statex-view'
+include ':compose'
+include ':basic'
+include ':view'

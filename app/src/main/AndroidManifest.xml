@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.petterp.state">
+    package="com.petterp.statex.app">
 
     <application
-        android:name="com.petterp.state.CustomApplication"
+        android:name="com.petterp.statex.app.CustomApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StateLayoutX">
         <activity
-            android:name="com.petterp.state.MainActivity"
+            android:name="com.petterp.statex.app.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.StateLayoutX.NoActionBar">
@@ -21,8 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.petterp.state.ComposeStateActivity" />
-        <activity android:name="com.petterp.state.ViewStateActivity" />
+        <activity android:name="com.petterp.statex.app.ComposeStateActivity" />
+        <activity android:name="com.petterp.statex.app.ViewStateActivity" />
     </application>
 
 </manifest>

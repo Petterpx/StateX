@@ -1,4 +1,4 @@
-package com.petterp.state.ui.theme
+package com.petterp.statex.app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

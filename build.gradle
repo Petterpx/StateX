@@ -14,9 +14,9 @@ buildscript {
             cmd.execute().text.trim().toInteger()
         }
         group_id = 'com.petterp'
-        artifactId_statex = 'statex'
-        artifactId_statex_compose = 'statex-compose'
-        artifactId_statex_view = 'statex-view'
+        artifactId_statex_basic = 'basic'
+        artifactId_statex_compose = 'compose'
+        artifactId_statex_view = 'view'
     }
     repositories {
         google()

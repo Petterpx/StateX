@@ -1,4 +1,4 @@
-package com.petterp.state
+package com.petterp.statex.app
 
 import android.os.Bundle
 import android.view.View
