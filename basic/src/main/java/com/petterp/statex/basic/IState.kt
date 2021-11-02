@@ -1,4 +1,4 @@
-package com.petterp.statex
+package com.petterp.statex.basic
 
 /**
  * 控制器具体行为接口

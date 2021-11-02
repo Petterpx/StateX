@@ -11,8 +11,8 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import com.petterp.statex.StateX
-import com.petterp.statex.StateX.defaultClickTime
+import com.petterp.statex.basic.StateX
+import com.petterp.statex.basic.StateX.defaultClickTime
 
 /**
  * StateView扩展

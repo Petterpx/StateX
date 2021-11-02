@@ -1,6 +1,6 @@
 package com.petterp.statex.compose
 
-import com.petterp.statex.IState
+import com.petterp.statex.basic.IState
 
 /**
  * compose状态页控制接口

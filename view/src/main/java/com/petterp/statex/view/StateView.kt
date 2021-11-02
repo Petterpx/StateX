@@ -10,9 +10,9 @@ import android.widget.FrameLayout
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.collection.ArrayMap
-import com.petterp.statex.StateEnum
-import com.petterp.statex.StateX
-import com.petterp.statex.StateX.defaultClickTime
+import com.petterp.statex.basic.StateEnum
+import com.petterp.statex.basic.StateX
+import com.petterp.statex.basic.StateX.defaultClickTime
 
 /**
  * 状态View

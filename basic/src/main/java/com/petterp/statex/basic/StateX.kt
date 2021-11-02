@@ -1,4 +1,4 @@
-package com.petterp.statex
+package com.petterp.statex.basic
 
 /**
  * Statex

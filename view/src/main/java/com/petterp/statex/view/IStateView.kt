@@ -1,6 +1,6 @@
 package com.petterp.statex.view
 
-import com.petterp.statex.IState
+import com.petterp.statex.basic.IState
 
 /**
  * 状态页-View 控制接口

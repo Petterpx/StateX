@@ -15,7 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.petterp.statex.StateX
+import com.petterp.statex.basic.StateX
 import com.petterp.statex.compose.composeConfig
 import com.petterp.statex.view.viewConfig
 

@@ -3,8 +3,8 @@ package com.petterp.statex.compose
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.petterp.statex.StateEnum
-import com.petterp.statex.StateX
+import com.petterp.statex.basic.StateEnum
+import com.petterp.statex.basic.StateX
 
 /**
  * Compose 状态控制器实例,对于外部,通过[IStateCompose]控制

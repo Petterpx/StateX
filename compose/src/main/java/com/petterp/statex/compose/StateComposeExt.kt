@@ -16,10 +16,10 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.semantics.Role
 import androidx.lifecycle.ViewModel
-import com.petterp.statex.IState
-import com.petterp.statex.StateEnum
-import com.petterp.statex.StateX
-import com.petterp.statex.StateX.defaultClickTime
+import com.petterp.statex.basic.IState
+import com.petterp.statex.basic.StateEnum
+import com.petterp.statex.basic.StateX
+import com.petterp.statex.basic.StateX.defaultClickTime
 
 internal typealias stateBlock = (tag: Any?) -> Unit
 internal typealias stateComponentBlock = @Composable IState.(tag: Any?) -> Unit
