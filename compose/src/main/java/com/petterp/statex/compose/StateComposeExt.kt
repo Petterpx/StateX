@@ -69,6 +69,41 @@ fun StateCompose(
     }
 }
 
+/** 在ViewModel中生成一个 IStateCompose
+ * @param stateEnum 默认的状态
+ * */
+inline fun ViewModel.lazyState(
+    stateEnum: StateEnum = StateEnum.CONTENT,
+    crossinline obj: StateComposeImpl.() -> Unit = {}
+): Lazy<IStateCompose> = lazy(LazyThreadSafetyMode.PUBLICATION) {
+    StateComposeImpl(stateEnum).apply(obj)
+}
+
+/**
+ * 当state在ViewModel中缓存时,可以使用这个方法便于对state做初始化相关
+ * @param composeState 要记住的状态State
+ * */
+@Composable
+inline fun rememberState(
+    composeState: IStateCompose,
+    crossinline block: IStateCompose.() -> Unit = {}
+): IStateCompose = currentComposer.cache(false) {
+    composeState.apply(block)
+}
+
+/**
+ * 记录state的状态,直接生成一个新的IStateCompose
+ * @param stateEnum 默认的状态
+ * @param block 对于IStateCompose的回调使用
+ * */
+@Composable
+inline fun rememberState(
+    stateEnum: StateEnum = StateEnum.CONTENT,
+    crossinline block: IStateCompose.() -> Unit = {}
+): IStateCompose = currentComposer.cache(false) {
+    StateComposeImpl(stateEnum).apply(block)
+}
+
 @Composable
 fun StateBoxComposeClick(block: () -> Unit, content: @Composable BoxScope.() -> Unit) {
     Box(
@@ -78,26 +113,6 @@ fun StateBoxComposeClick(block: () -> Unit, content: @Composable BoxScope.() -> 
         content = content
     )
 }
-
-/** 生成一个 */
-inline fun ViewModel.lazyState(
-    state: StateEnum = StateEnum.CONTENT,
-    crossinline obj: StateComposeImpl.() -> Unit = {}
-) = lazy(LazyThreadSafetyMode.PUBLICATION) {
-    StateComposeImpl(state).apply(obj)
-}
-
-/** 生成一个state状态 */
-@Composable
-fun rememberState(
-    stateEnum: StateEnum = StateEnum.CONTENT,
-    block: (IStateCompose.() -> Unit)? = null
-): IStateCompose =
-    currentComposer.cache(false) {
-        StateComposeImpl(stateEnum).apply {
-            block?.invoke(this)
-        }
-    }
 
 /** compose-防重复点击 */
 @SuppressLint("UnnecessaryComposedModifier")
