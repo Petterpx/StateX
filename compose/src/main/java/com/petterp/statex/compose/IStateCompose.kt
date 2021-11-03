@@ -8,6 +8,9 @@ import com.petterp.statex.basic.IState
  */
 interface IStateCompose : IState {
 
+    /** 当前state附带的value */
+    val tag: Any?
+
     /** 错误时的回调 */
     fun onError(block: stateBlock)
 

@@ -37,7 +37,6 @@ fun StateX.composeConfig(config: StateComposeConfig.() -> Unit) {
 /**
  * ComposeState
  * @param stateControl 控制器实例
- * @param lazyLoad 是否延迟load
  * @param loadingComponentBlock loading状态的Component
  * @param emptyComponentBlock null数据页面的Component
  * @param errorComponentBlock 加载错误状态的Component
@@ -52,20 +51,20 @@ fun StateCompose(
     contentComponentBlock: stateComponentBlock,
 ) {
     when (stateControl.state) {
-        StateEnum.LOADING -> loadingComponentBlock(stateControl, null)
-        StateEnum.CONTENT -> contentComponentBlock(stateControl, null)
+        StateEnum.LOADING -> loadingComponentBlock(stateControl, stateControl.tag)
+        StateEnum.CONTENT -> contentComponentBlock(stateControl, stateControl.tag)
         StateEnum.EMPTY -> if (stateControl.enableNullRetry) {
             StateBoxComposeClick(block = { stateControl.showLoading() }) {
-                emptyComponentBlock(stateControl, null)
+                emptyComponentBlock(stateControl, stateControl.tag)
             }
-        } else emptyComponentBlock(stateControl, null)
+        } else emptyComponentBlock(stateControl, stateControl.tag)
         StateEnum.ERROR -> if (stateControl.enableErrorRetry) {
             StateBoxComposeClick(block = {
                 stateControl.showLoading(null)
             }) {
-                errorComponentBlock(stateControl, null)
+                errorComponentBlock(stateControl, stateControl.tag)
             }
-        } else errorComponentBlock(stateControl, null)
+        } else errorComponentBlock(stateControl, stateControl.tag)
     }
 }
 
@@ -81,6 +80,7 @@ inline fun ViewModel.lazyState(
 
 /**
  * 当state在ViewModel中缓存时,可以使用这个方法便于对state做初始化相关
+ * 这样的好处就是可以将唯一初始化的东西放在这个 [block] 回调中,而不用担心重复初始化
  * @param composeState 要记住的状态State
  * */
 @Composable

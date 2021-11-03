@@ -2,6 +2,7 @@ package com.petterp.statex.app
 
 import android.app.Application
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -40,11 +41,14 @@ class CustomApplication : Application() {
             // 设置compose-state的配置
             composeConfig {
                 // 将tag传递出来,对于compose而言,我们有时需要对界面进行重绘,所以携带了传递的数据,以便做自定义处理
-                errorComponent {
+                errorComponent { tag ->
                     // Compose中插入原生
                     AndroidView(
                         {
-                            View.inflate(it, R.layout.item_state_error, null)
+                            View.inflate(it, R.layout.item_state_error, null).apply {
+                                findViewById<TextView>(R.id.tvErrorHint).text =
+                                    tag?.toString() ?: getString(R.string.tv_status_error_hint)
+                            }
                         },
                         Modifier
                             .fillMaxSize()

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/errorId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/errorId"
     android:background="@android:color/white"
     android:gravity="center"
     android:orientation="vertical">
@@ -16,10 +16,11 @@
         android:src="@drawable/ic_state_error" />
 
     <TextView
+        android:id="@+id/tvErrorHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textColor="@color/black"
         android:text="@string/tv_status_error_hint"
+        android:textColor="@color/black"
         android:textSize="18sp" />
 </LinearLayout>

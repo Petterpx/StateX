@@ -21,12 +21,18 @@ class StateComposeImpl constructor(stateEnum: StateEnum = StateEnum.CONTENT) : I
     /** 当前内部可变状态 */
     private var _internalState by mutableStateOf(StateEnum.CONTENT)
 
+    /** 当前状态内部缓存的tag */
+    private var _internalTag: Any?
+
     init {
         _internalState = stateEnum
+        _internalTag = null
     }
 
     override val state: StateEnum
         get() = _internalState
+    override val tag: Any?
+        get() = _internalTag
     override var enableNullRetry: Boolean = StateX.enableNullRetry
     override var enableErrorRetry: Boolean = StateX.enableNullRetry
 
@@ -52,17 +58,17 @@ class StateComposeImpl constructor(stateEnum: StateEnum = StateEnum.CONTENT) : I
 
     override fun showError(tag: Any?) {
         onError?.invoke(tag)
-        newState(StateEnum.ERROR)
+        newState(StateEnum.ERROR, tag)
     }
 
     override fun showContent(tag: Any?) {
         onContent?.invoke(tag)
-        newState(StateEnum.CONTENT)
+        newState(StateEnum.CONTENT, tag)
     }
 
     override fun showEmpty(tag: Any?) {
         onEmpty?.invoke(tag)
-        newState(StateEnum.EMPTY)
+        newState(StateEnum.EMPTY, tag)
     }
 
     override fun showLoading(
@@ -73,11 +79,12 @@ class StateComposeImpl constructor(stateEnum: StateEnum = StateEnum.CONTENT) : I
         onLoading?.invoke(tag)
         if (refresh) onRefresh?.invoke(tag)
         if (!silent) {
-            newState(StateEnum.LOADING)
+            newState(StateEnum.LOADING, tag)
         }
     }
 
-    private fun newState(newState: StateEnum) {
+    private fun newState(newState: StateEnum, tag: Any?) {
         _internalState = newState
+        _internalTag = tag
     }
 }
