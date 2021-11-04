@@ -19,9 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.ViewModel
-import com.petterp.statex.basic.StateEnum
 import com.petterp.statex.app.simple.CustomViewModel
 import com.petterp.statex.app.ui.theme.StateLayoutXTheme
+import com.petterp.statex.basic.StateEnum
 import com.petterp.statex.compose.IStateCompose
 import com.petterp.statex.compose.StateCompose
 import com.petterp.statex.compose.StateComposeImpl

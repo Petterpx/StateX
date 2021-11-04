@@ -30,7 +30,12 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize()
                     ) {
                         Button(onClick = {
-                            startActivity(Intent(this@MainActivity, ComposeStateActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    this@MainActivity,
+                                    ComposeStateActivity::class.java
+                                )
+                            )
                         }) {
                             Text(text = "compose")
                         }
