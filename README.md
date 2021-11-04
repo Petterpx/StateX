@@ -52,24 +52,18 @@ allprojects {
 
 ### Gradle
 
-```groovy
-implementation 'com.github.Petterpx:StateX:1.0-beta03'
-```
-
 > 如果您的项目中暂时只用到了View或者是一个完全使用Compose重写的项目，可以参照下述方式引入，即可减少不必要的导入。
 
 ##### View中单独引入
 
 ```groovy
-implementation 'com.github.Petterpx.StateX:statex:1.0-beta03'
-implementation 'com.github.Petterpx.StateX:statex-view:1.0-beta03'
+implementation 'com.github.Petterpx.StateX:view:1.0-rc01'
 ```
 
 ##### compose中单独引入
 
 ```groovy
-implementation 'com.github.Petterpx.StateX:statex:1.0-beta03'
-implementation 'com.github.Petterpx.StateX:statex-compose:1.0-beta03'
+implementation 'com.github.Petterpx.StateX:compose:1.0-rc01'
 ```
 
 #### 注意
