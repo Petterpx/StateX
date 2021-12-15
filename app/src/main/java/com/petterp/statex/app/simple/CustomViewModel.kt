@@ -2,7 +2,6 @@ package com.petterp.statex.app.simple
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.petterp.statex.compose.lazyState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -12,8 +11,6 @@ import kotlinx.coroutines.launch
  */
 class CustomViewModel : ViewModel() {
 
-    val state by lazyState()
-
     fun getData() {
         viewModelScope.launch {
             delay(3000)
@@ -22,15 +19,12 @@ class CustomViewModel : ViewModel() {
     }
 
     fun toStateSuccess(any: Any?) {
-        state.showContent(any)
     }
 
     fun toStateError(any: Any?) {
-        state.showError(any)
     }
 
     fun toStateEmpty(any: Any?) {
-        state.showEmpty(any)
     }
 
     fun toStateLoading(
@@ -38,6 +32,5 @@ class CustomViewModel : ViewModel() {
         silent: Boolean = false,
         refresh: Boolean = true
     ) {
-        state.showLoading()
     }
 }

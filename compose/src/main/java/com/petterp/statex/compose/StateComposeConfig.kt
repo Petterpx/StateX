@@ -1,43 +1,26 @@
 package com.petterp.statex.compose
 
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.runtime.Composable
+
 /**
  * state-compose 全局配置
  * @author petterp
  */
-class StateComposeConfig {
-    internal var loadingComponent: stateComponentBlock = {}
-    internal var emptyComponent: stateComponentBlock = {}
-    internal var errorComponent: stateComponentBlock = {}
-    internal var onContent: stateBlock? = null
-    internal var onLoading: stateBlock? = null
-    internal var onError: stateBlock? = null
-    internal var onEmpty: stateBlock? = null
+object StateComposeConfig {
+    internal var loadingComponent: @Composable (BoxScope.() -> Unit)? = null
+    internal var emptyComponent: @Composable (BoxScope.(PageData.Empty) -> Unit)? = null
+    internal var errorComponent: @Composable (BoxScope.(PageData.Error) -> Unit)? = null
 
-    fun onContent(block: stateBlock) {
-        this.onContent = block
-    }
-
-    fun onLoading(block: stateBlock) {
-        this.onLoading = block
-    }
-
-    fun onError(block: stateBlock) {
-        this.onError = block
-    }
-
-    fun onEmpty(block: stateBlock) {
-        this.onEmpty = block
-    }
-
-    fun loadingComponent(component: stateComponentBlock) {
+    fun loadingComponent(component: @Composable (BoxScope.() -> Unit)? = null) {
         this.loadingComponent = component
     }
 
-    fun errorComponent(component: stateComponentBlock) {
+    fun errorComponent(component: @Composable (BoxScope.(PageData.Error) -> Unit)? = null) {
         this.errorComponent = component
     }
 
-    fun emptyComponent(component: stateComponentBlock) {
+    fun emptyComponent(component: @Composable (BoxScope.(PageData.Empty) -> Unit)? = null) {
         this.emptyComponent = component
     }
 }
