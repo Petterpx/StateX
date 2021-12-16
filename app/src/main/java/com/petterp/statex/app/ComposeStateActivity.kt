@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -17,7 +16,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.petterp.statex.app.simple.CustomViewModel
 import com.petterp.statex.app.ui.theme.StateLayoutXTheme
 import com.petterp.statex.compose.*
 import kotlinx.coroutines.delay
@@ -32,8 +30,7 @@ class ComposeStateActivity : ComponentActivity() {
         setContent {
             StateLayoutXTheme {
                 ConstraintLayout {
-                    val (control, content) = createRefs()
-                    val viewModel by viewModels<CustomViewModel>()
+                    val (control, _) = createRefs()
                     var contentState by remember {
                         mutableStateOf(PageState<String>(PageData.Loading))
                     }
@@ -41,7 +38,6 @@ class ComposeStateActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         contentState,
                         loading = {
-                            Log.e("petterp", "被加载了")
                             delay(1000)
                             PageData.Success("")
                         }
@@ -61,9 +57,8 @@ class ComposeStateActivity : ComponentActivity() {
                             )
                             Text(text = "加载成功", fontSize = 18.sp)
                         }
-                        Log.e("petterp", "成")
                     }
-
+                    Log.e("petterp", "当前实时状态--${contentState.state}")
                     Row(
                         modifier = Modifier
                             .constrainAs(control) {

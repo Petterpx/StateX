@@ -4,11 +4,11 @@
 buildscript {
 
     ext {
-        compose_version = '1.0.4'
+        compose_version = '1.0.5'
         minsdk_version = 21
         targetsdk_version = 31
         compilesdk_version = 31
-        statex_version = '1.0-rc01'
+        statex_version = '1.0-rc02'
         versionCode = {
             def cmd = 'git rev-list HEAD --count'
             cmd.execute().text.trim().toInteger()

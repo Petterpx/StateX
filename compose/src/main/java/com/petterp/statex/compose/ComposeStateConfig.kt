@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
  * state-compose 全局配置
  * @author petterp
  */
-object StateComposeConfig {
+object ComposeStateConfig {
     internal var loadingComponent: @Composable (BoxScope.() -> Unit)? = null
     internal var emptyComponent: @Composable (BoxScope.(PageData.Empty) -> Unit)? = null
     internal var errorComponent: @Composable (BoxScope.(PageData.Error) -> Unit)? = null

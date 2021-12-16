@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 
 /**
- *
+ * ComposeState
  * @author petterp
  */
 
@@ -51,9 +51,9 @@ fun <T> ComposeState(
     modifier: Modifier,
     pageState: PageState<T> = rememberPageState(),
     loading: suspend () -> PageData<T>,
-    loadingComponentBlock: @Composable (BoxScope.() -> Unit)? = StateComposeConfig.loadingComponent,
-    emptyComponentBlock: @Composable (BoxScope.(PageData.Empty) -> Unit)? = StateComposeConfig.emptyComponent,
-    errorComponentBlock: @Composable (BoxScope.(PageData.Error) -> Unit)? = StateComposeConfig.errorComponent,
+    loadingComponentBlock: @Composable (BoxScope.() -> Unit)? = ComposeStateConfig.loadingComponent,
+    emptyComponentBlock: @Composable (BoxScope.(PageData.Empty) -> Unit)? = ComposeStateConfig.emptyComponent,
+    errorComponentBlock: @Composable (BoxScope.(PageData.Error) -> Unit)? = ComposeStateConfig.errorComponent,
     contentComponentBlock: @Composable (BoxScope.(PageData.Success<T>) -> Unit)
 ) {
     val scope = rememberCoroutineScope()
@@ -75,35 +75,6 @@ fun <T> ComposeState(
                 this,
                 pageState.interactionState as PageData.Empty
             )
-        }
-    }
-}
-
-@Composable
-fun <T> ComposeProducerState(modifier: Modifier, obj: suspend () -> T) {
-    var key by remember {
-        mutableStateOf(true)
-    }
-    val state by produceState<PageData<T>>(initialValue = PageData.Loading, key) {
-        if (value == PageData.Loading) {
-            value = try {
-                PageData.Success(obj())
-            } catch (e: Throwable) {
-                PageData.Error(e)
-            }
-        }
-    }
-
-    Box(modifier = modifier) {
-        when (state) {
-            is PageData.Success -> {}
-            is PageData.Loading -> {}
-            is PageData.Error -> {
-                // ...
-                key = !key
-                // ...
-            }
-            is PageData.Empty -> {}
         }
     }
 }
