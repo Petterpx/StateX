@@ -52,33 +52,16 @@ allprojects {
 
 ### Gradle
 
-> 如果您的项目中暂时只用到了View或者是一个完全使用Compose重写的项目，可以参照下述方式引入，即可减少不必要的导入。
-
 ##### View中单独引入
 
 ```groovy
-implementation 'com.github.Petterpx.StateX:view:1.0-rc01'
+implementation 'com.github.Petterpx.StateX:view:1.0-rc02'
 ```
 
 ##### compose中单独引入
 
 ```groovy
-implementation 'com.github.Petterpx.StateX:compose:1.0-rc01'
-```
-
-#### 注意
-
-StateX 不会引入 `任何` 第三方库,即意味着您需要手动导入kotlin库，如果是在compose中使用，您需要导入compose相关组件，这样可以避免不必要的冲突。
-
-```groovy
-// kotlin
-implementation 'androidx.core:core-ktx:1.6.0'
-
-// compose
-implementation "androidx.compose.ui:ui:1.0.2"
-implementation "androidx.compose.material:material:1.0.2"
-implementation "androidx.compose.runtime:runtime:1.0.2"
-implementation "androidx.compose.ui:ui-tooling-preview:1.0.2"
+implementation 'com.github.Petterpx.StateX:compose:1.0-rc02'
 ```
 
 #### 混淆
