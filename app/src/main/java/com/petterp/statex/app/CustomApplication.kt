@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.petterp.statex.basic.StateX
-import com.petterp.statex.compose.StateComposeConfig
+import com.petterp.statex.compose.ComposeStateConfig
 import com.petterp.statex.view.viewConfig
 
 /**
@@ -36,7 +36,7 @@ class CustomApplication : Application() {
                 }
             }
             // 设置compose-state的配置
-            StateComposeConfig.apply {
+            ComposeStateConfig.apply {
                 // 将tag传递出来,对于compose而言,我们有时需要对界面进行重绘,所以携带了传递的数据,以便做自定义处理
                 errorComponent {
                     // Compose中插入原生
