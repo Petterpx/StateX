@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import kotlinx.coroutines.launch
 
 /**
  * ComposeState
@@ -14,57 +13,67 @@ import kotlinx.coroutines.launch
  */
 
 /** 状态页data */
-sealed class PageData<out T> {
-    data class Success<T>(val t: T? = null) : PageData<T>()
+sealed class PageData {
+    data class Success<T>(val t: T) : PageData()
     data class Error(
         val throwable: Throwable? = null,
         val value: Any? = null
-    ) : PageData<Nothing>()
+    ) : PageData()
 
-    object Loading : PageData<Nothing>()
-    data class Empty(val value: Any? = null) : PageData<Nothing>()
+    object Loading : PageData()
+    data class Empty(val value: Any? = null) : PageData()
 }
 
 /** 页面状态 */
-class PageState<T>(state: PageData<T>) {
+class PageState(state: PageData) {
 
     /** 内部交互的状态 */
     internal var interactionState by mutableStateOf(state)
 
     /** 供外部获取当前状态 */
-    val state: PageData<T>
+    val state: PageData
         get() = interactionState
 
     val isLoading: Boolean
         get() = interactionState is PageData.Loading
+
+    companion object {
+        fun loading() = PageState(PageData.Loading)
+
+        fun <T> success(t: T) = PageState(PageData.Success(t))
+
+        fun empty(value: Any? = null) = PageState(PageData.Empty(value))
+
+        fun error(
+            throwable: Throwable? = null,
+            exceptionMessage: Any? = null
+        ) = PageState(PageData.Error(throwable, exceptionMessage))
+    }
 }
 
 @Composable
-fun <T> rememberPageState(state: PageData<T> = PageData.Loading): PageState<T> {
+fun rememberPageState(state: PageData = PageData.Loading): PageState {
     return rememberSaveable {
         PageState(state)
     }
 }
 
 @Composable
-fun <T> ComposeState(
-    modifier: Modifier,
-    pageState: PageState<T> = rememberPageState(),
-    loading: suspend () -> PageData<T>,
-    loadingComponentBlock: @Composable (BoxScope.() -> Unit)? = ComposeStateConfig.loadingComponent,
-    emptyComponentBlock: @Composable (BoxScope.(PageData.Empty) -> Unit)? = ComposeStateConfig.emptyComponent,
-    errorComponentBlock: @Composable (BoxScope.(PageData.Error) -> Unit)? = ComposeStateConfig.errorComponent,
+fun <T> StateCompose(
+    modifier: Modifier = Modifier,
+    pageState: PageState = rememberPageState(),
+    loading: () -> Unit,
+    loadingComponentBlock: @Composable (BoxScope.() -> Unit)? = StateComposeConfig.loadingComponent,
+    emptyComponentBlock: @Composable (BoxScope.(PageData.Empty) -> Unit)? = StateComposeConfig.emptyComponent,
+    errorComponentBlock: @Composable (BoxScope.(PageData.Error) -> Unit)? = StateComposeConfig.errorComponent,
     contentComponentBlock: @Composable (BoxScope.(PageData.Success<T>) -> Unit)
 ) {
-    val scope = rememberCoroutineScope()
     Box(modifier = modifier) {
         when (pageState.interactionState) {
-            is PageData.Success -> contentComponentBlock(pageState.interactionState as PageData.Success<T>)
+            is PageData.Success<*> -> contentComponentBlock(pageState.interactionState as PageData.Success<T>)
             is PageData.Loading -> {
                 loadingComponentBlock?.invoke(this)
-                scope.launch {
-                    pageState.interactionState = loading.invoke()
-                }
+                loading.invoke()
             }
             is PageData.Error -> StateBoxCompose({
                 pageState.interactionState = PageData.Loading
@@ -80,7 +89,7 @@ fun <T> ComposeState(
 }
 
 @Composable
-fun StateBoxCompose(block: () -> Unit, content: @Composable BoxScope.() -> Unit) {
+private fun StateBoxCompose(block: () -> Unit, content: @Composable BoxScope.() -> Unit) {
     Box(
         Modifier.clickable {
             block.invoke()

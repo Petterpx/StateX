@@ -16,9 +16,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.lifecycleScope
 import com.petterp.statex.app.ui.theme.StateLayoutXTheme
 import com.petterp.statex.compose.*
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  *
@@ -32,14 +34,17 @@ class ComposeStateActivity : ComponentActivity() {
                 ConstraintLayout {
                     val (control, _) = createRefs()
                     var contentState by remember {
-                        mutableStateOf(PageState<String>(PageData.Loading))
+                        mutableStateOf(PageState(PageData.Loading))
                     }
-                    ComposeState(
+
+                    StateCompose<String>(
                         modifier = Modifier.fillMaxSize(),
                         contentState,
                         loading = {
-                            delay(1000)
-                            PageData.Success("")
+                            lifecycleScope.launch {
+                                delay(2000)
+                                contentState = PageState.success("")
+                            }
                         }
                     ) {
                         Column(
