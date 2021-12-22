@@ -55,13 +55,13 @@ allprojects {
 ##### View中单独引入
 
 ```groovy
-implementation 'com.github.Petterpx.StateX:view:1.0-rc02'
+implementation 'com.github.Petterpx.StateX:view:1.0'
 ```
 
 ##### compose中单独引入
 
 ```groovy
-implementation 'com.github.Petterpx.StateX:compose:1.0-rc02'
+implementation 'com.github.Petterpx.StateX:compose:1.0'
 ```
 
 #### 混淆
