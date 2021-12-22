@@ -1,4 +1,4 @@
-package com.petterp.statex.basic
+package com.petterp.statex.view
 
 /**
  * 状态枚举

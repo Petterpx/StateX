@@ -10,9 +10,6 @@ import android.widget.FrameLayout
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.collection.ArrayMap
-import com.petterp.statex.basic.StateEnum
-import com.petterp.statex.basic.StateX
-import com.petterp.statex.basic.StateX.defaultClickTime
 
 /**
  * 状态View
@@ -34,26 +31,26 @@ class StateView @JvmOverloads constructor(
     /** 当前缺省页是否加载成功过, 即是否执行过[showContent] */
     var loaded = false
     private var _state: StateEnum = StateEnum.CONTENT
-    private var _enableNullRetry: Boolean = StateX.enableNullRetry
-    private var _enableErrorRetry: Boolean = StateX.enableErrorRetry
+    private var _enableNullRetry: Boolean = StateViewConfig.enableNullRetry
+    private var _enableErrorRetry: Boolean = StateViewConfig.enableErrorRetry
 
-    private var clickTime: Long = defaultClickTime
+    private var clickTime: Long = StateViewConfig.defaultClickTime
     private var retryIds: IntArray? = null
-        get() = field ?: viewConfig.retryIds
+        get() = field ?: StateViewConfig.retryIds
     private var onEmpty: stateBlock? = null
-        get() = field ?: viewConfig.onEmpty
+        get() = field ?: StateViewConfig.onEmpty
     private var onError: stateBlock? = null
-        get() = field ?: viewConfig.onError
+        get() = field ?: StateViewConfig.onError
     private var onContent: stateBlock? = null
-        get() = field ?: viewConfig.onContent
+        get() = field ?: StateViewConfig.onContent
     private var onLoading: stateBlock? = null
-        get() = field ?: viewConfig.onLoading
+        get() = field ?: StateViewConfig.onLoading
     private var onRefresh: (StateView.(tag: Any?) -> Unit)? = null
 
     /** 错误页面布局 */
     @LayoutRes
     var errorLayout: Int = NO_ID
-        get() = if (field == NO_ID) viewConfig.errorLayout else field
+        get() = if (field == NO_ID) StateViewConfig.errorLayout else field
         set(value) {
             if (field != value) {
                 removeStatus(StateEnum.ERROR)
@@ -64,7 +61,7 @@ class StateView @JvmOverloads constructor(
     /** 空页面布局 */
     @LayoutRes
     var emptyLayout: Int = NO_ID
-        get() = if (field == NO_ID) viewConfig.emptyLayout else field
+        get() = if (field == NO_ID) StateViewConfig.emptyLayout else field
         set(value) {
             if (field != value) {
                 removeStatus(StateEnum.EMPTY)
@@ -75,7 +72,7 @@ class StateView @JvmOverloads constructor(
     /** 加载中页面布局 */
     @LayoutRes
     var loadingLayout: Int = NO_ID
-        get() = if (field == NO_ID) viewConfig.loadingLayout else field
+        get() = if (field == NO_ID) StateViewConfig.loadingLayout else field
         set(value) {
             if (field != value) {
                 removeStatus(StateEnum.LOADING)
@@ -94,11 +91,11 @@ class StateView @JvmOverloads constructor(
             _enableErrorRetry =
                 attributes.getBoolean(
                     R.styleable.StateView_enable_error_retry,
-                    StateX.enableErrorRetry
+                    StateViewConfig.enableErrorRetry
                 )
             _enableNullRetry = attributes.getBoolean(
                 R.styleable.StateView_enable_null_retry,
-                StateX.enableNullRetry
+                StateViewConfig.enableNullRetry
             )
         } finally {
             attributes.recycle()
@@ -218,10 +215,11 @@ class StateView @JvmOverloads constructor(
      * 为错误页/空页中的指定Id控件设置点击事件, 点击会触发[showLoading]
      * 默认点击500ms内防抖动
      */
-    fun setRetryIds(@IdRes vararg ids: Int, clickTime: Long = defaultClickTime) = apply {
-        retryIds = ids
-        this.clickTime = clickTime
-    }
+    fun setRetryIds(@IdRes vararg ids: Int, clickTime: Long = StateViewConfig.defaultClickTime) =
+        apply {
+            retryIds = ids
+            this.clickTime = clickTime
+        }
 
     /**
      * 本函数为方便其他框架热插拔使用, 开发者一般情况不使用
