@@ -8,8 +8,7 @@ buildscript {
         minsdk_version = 21
         targetsdk_version = 31
         compilesdk_version = 31
-        statex_compose_version = '1.1'
-        statex_view_version = '1.2'
+        statex_version = '1.2'
         versionCode = {
             def cmd = 'git rev-list HEAD --count'
             cmd.execute().text.trim().toInteger()
