@@ -11,7 +11,7 @@ afterEvaluate {
                 from components.release
                 groupId = group_id
                 artifactId = artifactId_statex_view
-                version = statex_version
+                version = statex_view_version
             }
         }
     }
@@ -24,7 +24,7 @@ android {
         minSdk minsdk_version
         targetSdk targetsdk_version
         versionCode versionCode
-        versionName statex_version
+        versionName statex_view_version
         consumerProguardFiles "consumer-rules.pro"
     }
     buildTypes {

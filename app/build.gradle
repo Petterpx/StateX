@@ -10,7 +10,7 @@ android {
         minSdk minsdk_version
         targetSdk targetsdk_version
         versionCode versionCode
-        versionName statex_version
+        versionName "1.0"
     }
 
 

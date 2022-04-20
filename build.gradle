@@ -8,7 +8,8 @@ buildscript {
         minsdk_version = 21
         targetsdk_version = 31
         compilesdk_version = 31
-        statex_version = '1.1'
+        statex_compose_version = '1.1'
+        statex_view_version = '1.2'
         versionCode = {
             def cmd = 'git rev-list HEAD --count'
             cmd.execute().text.trim().toInteger()
@@ -24,7 +25,6 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
-
     }
 }
 task clean(type: Delete) {
