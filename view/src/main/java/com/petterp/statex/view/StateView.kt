@@ -21,7 +21,7 @@ class StateView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), IStateView {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val views = ArrayMap<StateEnum, View>()
     private var refresh = true
@@ -102,10 +102,10 @@ class StateView @JvmOverloads constructor(
         }
     }
 
-    override val state: StateEnum
+    val state: StateEnum
         get() = _state
-    override var enableNullRetry: Boolean = _enableNullRetry
-    override var enableErrorRetry: Boolean = _enableErrorRetry
+    var enableNullRetry: Boolean = _enableNullRetry
+    var enableErrorRetry: Boolean = _enableErrorRetry
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -125,7 +125,7 @@ class StateView @JvmOverloads constructor(
      * @see showEmpty
      * @see StateConfig.onEmpty
      */
-    override fun onEmpty(block: stateBlock) = apply {
+    fun onEmpty(block: stateBlock) = apply {
         onEmpty = block
     }
 
@@ -134,7 +134,7 @@ class StateView @JvmOverloads constructor(
      * @see showError
      * @see StateConfig.onError
      */
-    override fun onError(block: stateBlock) = apply {
+    fun onError(block: stateBlock) = apply {
         onError = block
     }
 
@@ -143,14 +143,14 @@ class StateView @JvmOverloads constructor(
      * @see showLoading
      * @see StateConfig.onLoading
      */
-    override fun onLoading(block: stateBlock) = apply {
+    fun onLoading(block: stateBlock) = apply {
         onLoading = block
     }
 
     /**
      * 当[showLoading]时会回调该函数参数, 一般将网络请求等异步操作放入其中
      */
-    override fun onRefresh(block: StateView.(tag: Any?) -> Unit) = apply {
+    fun onRefresh(block: StateView.(tag: Any?) -> Unit) = apply {
         onRefresh = block
     }
 
@@ -159,7 +159,7 @@ class StateView @JvmOverloads constructor(
      * @see showContent
      * @see StateConfig.onContent
      */
-    override fun onContent(block: stateBlock) = apply {
+    fun onContent(block: stateBlock) = apply {
         onContent = block
     }
 
@@ -173,7 +173,7 @@ class StateView @JvmOverloads constructor(
      * @param silent 仅执行[onRefresh], 不会显示加载中布局, 也不执行[onLoading]
      * @param refresh 是否回调[onRefresh]
      */
-    override fun showLoading(tag: Any?, silent: Boolean, refresh: Boolean) {
+    fun showLoading(tag: Any? = null, silent: Boolean = false, refresh: Boolean = true) {
         this.refresh = refresh
         if (silent && refresh) {
             onRefresh?.invoke(this, tag)
@@ -188,7 +188,7 @@ class StateView @JvmOverloads constructor(
      * 显示空页, 会触发[onEmpty]的函数参数
      * @param tag 传递任意对象给[onEmpty]函数
      */
-    override fun showEmpty(tag: Any?) {
+    fun showEmpty(tag: Any? = null) {
         show(StateEnum.EMPTY, tag)
     }
 
@@ -196,7 +196,7 @@ class StateView @JvmOverloads constructor(
      * 显示错误页, 会触发[onError]的函数参数
      * @param tag 传递任意对象给[onError]函数
      */
-    override fun showError(tag: Any?) {
+    fun showError(tag: Any? = null) {
         show(StateEnum.ERROR, tag)
     }
 
@@ -204,7 +204,7 @@ class StateView @JvmOverloads constructor(
      * 显示内容布局, 表示成功缺省页
      * @param tag 传递任意对象给[onContent]函数
      */
-    override fun showContent(tag: Any?) {
+    fun showContent(tag: Any? = null) {
         if (trigger && stateChanged)
             show(StateEnum.CONTENT, tag)
     }
