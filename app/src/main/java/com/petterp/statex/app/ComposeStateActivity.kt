@@ -33,8 +33,10 @@ class ComposeStateActivity : ComponentActivity() {
             StateLayoutXTheme {
                 ConstraintLayout {
                     val (control, _) = createRefs()
-                    var contentState by remember {
-                        mutableStateOf(PageState(PageData.Loading))
+                    //闪退
+//                    val contentState = rememberPageState()
+                    val contentState = remember {
+                        PageState(PageState.loading())
                     }
 
                     StateCompose<String>(
@@ -43,7 +45,7 @@ class ComposeStateActivity : ComponentActivity() {
                         loading = {
                             lifecycleScope.launch {
                                 delay(2000)
-                                contentState = PageState.success("")
+                                contentState.changeState(PageState.success(""))
                             }
                         }
                     ) {
@@ -76,7 +78,7 @@ class ComposeStateActivity : ComponentActivity() {
                         Button(
                             modifier = modifier,
                             onClick = {
-                                contentState = PageState(PageData.Success(""))
+                                contentState.changeState(PageState.success(""))
                             }
                         ) {
                             Text(text = "成功")
@@ -84,7 +86,7 @@ class ComposeStateActivity : ComponentActivity() {
                         Button(
                             modifier = modifier,
                             onClick = {
-                                contentState = PageState(PageData.Error())
+                                contentState.changeState(PageState.error())
                                 Log.e("petterp", "点击了失败")
                             }
                         ) {
@@ -92,7 +94,7 @@ class ComposeStateActivity : ComponentActivity() {
                         }
                         Button(
                             modifier = modifier,
-                            onClick = { contentState = PageState(PageData.Loading) }
+                            onClick = { contentState.changeState(PageState.loading()) }
                         ) {
                             Text(text = "加载中")
                         }

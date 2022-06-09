@@ -31,23 +31,27 @@ class PageState(state: PageData) {
     internal var interactionState by mutableStateOf(state)
 
     /** 供外部获取当前状态 */
-    val state: PageData
-        get() = interactionState
+    val state: PageData get() = interactionState
+
+    /** 供外部修改当前状态 */
+    fun changeState(pageData: PageData) {
+        interactionState = pageData
+    }
 
     val isLoading: Boolean
         get() = interactionState is PageData.Loading
 
     companion object {
-        fun loading() = PageState(PageData.Loading)
+        fun loading() = PageData.Loading
 
-        fun <T> success(t: T) = PageState(PageData.Success(t))
+        fun <T> success(t: T) = PageData.Success(t)
 
-        fun empty(value: Any? = null) = PageState(PageData.Empty(value))
+        fun empty(value: Any? = null) = PageData.Empty(value)
 
         fun error(
             throwable: Throwable? = null,
             exceptionMessage: Any? = null
-        ) = PageState(PageData.Error(throwable, exceptionMessage))
+        ) = PageData.Error(throwable, exceptionMessage)
     }
 }
 
